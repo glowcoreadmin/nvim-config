@@ -1,31 +1,26 @@
 return {
-  {
     "nvim-telescope/telescope.nvim",
+    enabled = false,
     dependencies = {
-      "nvim-lua/plenary.nvim",
-      { "nvim-telescope/telescope-fzf-native.nvim", build = "make", cond = vim.fn.executable("make") == 1 },
+        "nvim-lua/plenary.nvim",
+        {
+            "nvim-telescope/telescope-fzf-native.nvim",
+            build = "make",
+        },
+    },
+    opts = {
+        pickers = {
+            find_files = {
+                previewer = false,
+            },
+        },
     },
     keys = {
-      { "<leader>ff", "<cmd>Telescope find_files<cr>", desc = "Find files" },
-      { "<leader>fg", "<cmd>Telescope live_grep<cr>",  desc = "Live grep" },
-      { "<leader>fb", "<cmd>Telescope buffers<cr>",    desc = "Buffers" },
-      { "<leader>fh", "<cmd>Telescope help_tags<cr>",  desc = "Help tags" },
+        { "<leader>ff", "<cmd>Telescope find_files<CR>", desc = "Find files" },
+        { "<leader>fg", "<cmd>Telescope live_grep<CR>", desc = "Live grep" },
     },
-    config = function()
-      local telescope = require("telescope")
-      local actions_layout = require("telescope.actions.layout")
-
-      telescope.setup({
-        defaults = {
-          layout_strategy = "horizontal",
-          layout_config = { width = 0.95 },
-        },
-        pickers = {
-          live_grep = { previewer = false }, -- huge speed win in monorepos
-        },
-      })
-
-      pcall(telescope.load_extension, "fzf")
+    config = function(_, opts)
+        require("telescope").setup(opts)
+        require("telescope").load_extension("fzf")
     end,
-  },
 }
