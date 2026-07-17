@@ -23,10 +23,15 @@ return {
       },
     },
 
+    config = function(_, opts)
+        require("neo-tree").setup(opts)
+    end,
+
     opts = {
       close_if_last_window = true,
 
       filesystem = {
+
         follow_current_file = {
           enabled = true,
           leave_dirs_open = false,
@@ -43,7 +48,7 @@ return {
 
       window = {
         position = "left",
-        width = 35,
+        width = 45,
       },
     },
   },
